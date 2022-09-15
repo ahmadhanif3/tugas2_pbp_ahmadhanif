@@ -4,7 +4,7 @@ Kelas   : PBP C<br>
 Link    : https://katalog-hanif.herokuapp.com/katalog/
 
 ## Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html
-Link bagan: https://github.com/ahmadhanif3/tugas2_pbp_ahmadhanif/blob/main/bagan.jpg.jpg<br><br>
+Bagan terdapat pada repo dengan nama file bagan.jpg<br><br>
 Client <(<- Web Page)   Melalui Internet    (Request ->)> Server<br>
 Di dalam Server {
     Run manage.py -> (views.py <-> (models.py <-> DB)) -> index.html -> Balik dikirim ke client
