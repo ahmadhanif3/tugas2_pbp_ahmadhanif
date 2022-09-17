@@ -1,0 +1,112 @@
+[
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 1,
+        "fields": {
+            "watched": "Yes",
+            "title": "Seven",
+            "rating": 5,
+            "release_date": "22 September 1995",
+            "review": "Fincher's bleak and oppressive second feature film shook up the crime thriller genre and set the stage for the litany of copycats that would come after it."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 2,
+        "fields": {
+            "watched": "Yes",
+            "title": "Mystic River",
+            "rating": 4,
+            "release_date": "15 October 2003",
+            "review": "Mystic River features a moving screenplay, solid direction and a superb cast highlighted by Sean Penn's Oscar-worthy performance."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 3,
+        "fields": {
+            "watched": "Yes",
+            "title": "Midnight in Paris",
+            "rating": 5,
+            "release_date": "10 June 2011",
+            "review": "Midnight in Paris is a very unselfish and lovely approach to inspiration, love, and the written word. A must watch."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 4,
+        "fields": {
+            "watched": "Yes",
+            "title": "Before Sunrise",
+            "rating": 5,
+            "release_date": "27 January 1995",
+            "review": "What a film like Before Sunrise champions is that some of the most meaningful moments in our lives can be sensual and ephemeral: a look, a touch, a feeling, a few short hours."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 5,
+        "fields": {
+            "watched": "Yes",
+            "title": "About Time",
+            "rating": 4,
+            "release_date": "8 November 2013",
+            "review": "What matters are not the unrealistic, fancifully romantic ways in which Curtis portrays his characters but the wisdom he offers about how they resolve to live their lives."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 6,
+        "fields": {
+            "watched": "Yes",
+            "title": "Goodfellas",
+            "rating": 5,
+            "release_date": "19 September 1990",
+            "review": "Complex, volatile, ironic and disquieting, Scorsese's Goodfellas is a masterly achievement in intense observation."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 7,
+        "fields": {
+            "watched": "Yes",
+            "title": "The King of Staten Island",
+            "rating": 3,
+            "release_date": "28 May 2020",
+            "review": "While it doesn't reach its potential, The King of Staten Island has enough going for it that it's worth a lukewarm recommendation. Just don't expect it to enjoy a long reign in your heart."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 8,
+        "fields": {
+            "watched": "Yes",
+            "title": "Whiplash",
+            "rating": 4,
+            "release_date": "10 October 2014",
+            "review": "It's one of 2014's best films, an emotional powerhouse that features one of the most memorable performances in recent memory."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 9, 
+        "fields": {
+            "watched": "Yes", 
+            "title": "Rogue One: A Star Wars Story",
+            "rating": 5,
+            "release_date": "16 December 2016",
+            "review": "An incredible cast in a well executed Star Wars film. The representation is beautiful and that ending!! Memorable."
+        }
+    },
+    {
+        "model": "mywatchlist.mywatchlist",
+        "pk": 10,
+        "fields": {
+            "watched": "Yes",
+            "title": "The Last Dance",
+            "rating": 5,
+            "release_date": "19 April 2020",
+            "review": "For people who wonder whether we'll ever see sports dynasties again, there's a great deal here to enjoy. And if nothing else, you will certainly see some tremendous dunks."
+        }
+    }
+]
