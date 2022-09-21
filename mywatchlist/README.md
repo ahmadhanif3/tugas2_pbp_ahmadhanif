@@ -4,9 +4,9 @@ Kelas   : PBP C<br>
 Link    : https://katalog-hanif.herokuapp.com/mywatchlist/
 
 ### Jelaskan perbedaan antara JSON, XML, dan HTML!
-- JSON merupakan 
-- XML merupakan
-- HTML merupakan
+- JSON atau JavaScript Object Notation merupakan  
+- XML eXtensible Markup Language merupakan
+- HTML atau HyperText Markup Language merupakan sebuah markup language standar yang digunakan untuk di-display pada browser. 
 
 ### Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
@@ -31,6 +31,9 @@ http://localhost:8000/mywatchlist/json -> path("json/", show_json, name="show_js
 Dikarenakan kita membuat aplikasi mywatchlist pada project yang sama dengan tugas 2, kita tidak perlu melakukan deploymen lagi (yeyy). Namun kita harus tetap melakukan makemigrations, migrate, dan loaddata. Lalu lakukan git add, commit, dan push pada repository. Setelah itu pergi ke heroku dan buka aplikasi untuk tugas 2. Pada bagian more, pilih run a console lalu ketik bash. Setelah itu akan muncul terminal, yang harus kita lakukan adalah ketik command **python manage.py loaddata initial_watchlist_data.json**. Setelah selesai, aplikasi dapat diakses melewati link yang ada! (pada awal README.md) 
 
 ### Postman
+HTML
 ![](images/postman_mywatchlist_html.png)
+JSON
 ![](images/postman_mywatchlist_json.png)
+XML
 ![](images/postman_mywatchlist_xml.png)
