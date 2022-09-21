@@ -21,7 +21,8 @@ XML dan HTML sama-sama merupakan markup language, namun keduanya memiliki perbed
  | Tags diperuntukkan menjelaskan data | Tags diperuntukkan menunjukkan data |<br><br>
  
  **Perbedaan XML & JSON**<br>
- | XML | JSON |
+ | XML        | JSON       |
+ | ---------- | ---------- |
  | Berasal dari SGML | Berdasarkan bahasa JavaScript |
  | Tidak mendukung array | Mendukung array |
  | Ada start dan end tags | Tidak menggunakan end tag |
@@ -30,11 +31,11 @@ XML dan HTML sama-sama merupakan markup language, namun keduanya memiliki perbed
  | Sedikit lebih sulit dibaca | Lebih mudah dibaca |<br><br>
 
 ### Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
-Kita memperlukan data delivery dalam pengimplementasian sebuah platform dikarenakan 
+Kita memperlukan data delivery dalam pengimplementasian sebuah platform dikarenakan adanya pertukaran data yang terjadi antara client serta juga server. Dengan adanya data delivery, request yang dikirim oleh client serta web page yang dikirim kembali oleh server dapat terjadi. Format untuk respone-request bisa dalam bentuk JSON, XML, dan umumnya HTML. Mengirim atau menerima dalam format JSON atau XML dapat menggunakan AJAX atau WebSocket. AJAX & WebSocket sendiri diimplementasi oleh jQuery atau Socket.js. Semua hal tersebut dijalankan di atas HTTP/HTTPS.
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
 1)  **Membuat suatu aplikasi baru bernama mywatchlist di proyek Django Tugas 2 pekan lalu.**<br>
-Masuk terlebih dahulu ke folder tugas 2, lalu ke command prompt. Nyalakan virtual environment dengan command ```python -m venv env``` lalu dilanjutkan dengan ```env\Scripts\activate.bat``` (untuk Windows). Setelah itu, ketik command ```python manage.py startapp mywishlist```.
+Masuk terlebih dahulu ke folder tugas 2, lalu ke command prompt. Nyalakan virtual environment dengan command ```python -m venv env``` lalu dilanjutkan dengan ```env\Scripts\activate.bat``` (untuk Windows). Setelah itu, ketik command ```python manage.py startapp mywatchlist```.
 2) **Menambahkan path mywatchlist sehingga pengguna dapat mengakses http://localhost:8000/mywatchlist.**<br>
 Pergi ke folder project_django dan masuk ke urls.py. pada bagian urlpatterns, tambahkan ```path("mywatchlist/", include("mywatchlist.urls"))``` agar aplikasi mywatchlist dapat diakses. Tak lupa untuk menambahkan mywatchlist pada settings.py bagian INSTALLED_APPS.
 3) **Membuat sebuah model MyWatchList yang memiliki atribut.**<br>
