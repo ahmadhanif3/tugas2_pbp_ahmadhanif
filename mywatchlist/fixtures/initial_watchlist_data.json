@@ -3,7 +3,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 1,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "Seven",
             "rating": 5,
             "release_date": "1995-9-22",
@@ -14,7 +14,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 2,
         "fields": {
-            "watched": "No :(",
+            "watched": "No",
             "title": "Mystic River",
             "rating": 4,
             "release_date": "2003-10-15",
@@ -25,7 +25,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 3,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "Midnight in Paris",
             "rating": 5,
             "release_date": "2011-6-10",
@@ -36,7 +36,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 4,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "Before Sunrise",
             "rating": 5,
             "release_date": "1995-1-27",
@@ -47,7 +47,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 5,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "About Time",
             "rating": 4,
             "release_date": "2013-11-8",
@@ -58,7 +58,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 6,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "Goodfellas",
             "rating": 5,
             "release_date": "1990-9-19",
@@ -69,7 +69,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 7,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "The King of Staten Island",
             "rating": 3,
             "release_date": "2020-5-28",
@@ -80,7 +80,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 8,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "Whiplash",
             "rating": 4,
             "release_date": "2014-10-10",
@@ -91,7 +91,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 9, 
         "fields": {
-            "watched": "No :(", 
+            "watched": "No", 
             "title": "Rogue One: A Star Wars Story",
             "rating": 5,
             "release_date": "2016-12-16",
@@ -102,7 +102,7 @@
         "model": "mywatchlist.mywatchlist",
         "pk": 10,
         "fields": {
-            "watched": "Yes :D",
+            "watched": "Yes",
             "title": "The Last Dance",
             "rating": 5,
             "release_date": "2020-4-19",
