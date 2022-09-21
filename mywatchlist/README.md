@@ -1,7 +1,7 @@
 Nama    : Ahmad Hanif Adisetya<br>
 NPM     : 2106750603<br>
 Kelas   : PBP C<br>
-Link    : https://katalog-hanif.herokuapp.com/mywatchlist/
+Link    : https://katalog-hanif.herokuapp.com/mywatchlist/, https://katalog-hanif.herokuapp.com/mywatchlist/html/, 
 
 ### Jelaskan perbedaan antara JSON, XML, dan HTML!
 **Pengertian**
