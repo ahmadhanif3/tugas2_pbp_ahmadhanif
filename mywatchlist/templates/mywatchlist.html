@@ -1,15 +1,73 @@
-{% extends 'base.html' %}
+<style>
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: beige;
+    }
+    h1 {
+        text-align:center;
+    }
 
+    .credentials {
+        text-align:center;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-color:#f00;
+        border-collapse:collapses;
+        background-color:rgb(247, 247, 242);
+    }
+
+    table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    th, td {
+        padding:10px;
+    }
+
+    .btn {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:20px;
+        width:100px;
+        padding:10px;
+        text-align:center;
+        border:5px;
+        border-radius:5px;
+        cursor:pointer;
+        color:#fff;
+        background-color:#f00;
+        margin:auto;
+        margin-top:10px
+    }
+    
+</style>
+
+<script>
+    function popup() {
+        alert("Selamat, kamu sudah banyak menonton!")
+    }
+</script>
+
+{% extends 'base.html' %}
   {% block content %}
     <h1>Assignment 3 PBP/PBD</h1>
 
-    <h5>Name: </h5>
-    <p>{{nama}}</p>
+    <class class="credentials">
+        <h5>Name: </h5>
+        <p>{{nama}}</p>
+    
+        <h5>Student ID: </h5>
+        <p>{{npm}}</p>
+    </class>
 
-    <h5>Student ID: </h5>
-    <p>{{npm}}</p>
+    <input type="button" class="btn" value="Click Me!" onclick="popup()">
 
-    <table border="3", bordercolor="#FF0000">
+    <br>
+    <table width="80%">
         <tr>
             <th>Watched</th>
             <th>Title of Movie/Series</th>
@@ -27,5 +85,4 @@
             </tr>
         {% endfor %}
     </table>
-
   {% endblock content %}
