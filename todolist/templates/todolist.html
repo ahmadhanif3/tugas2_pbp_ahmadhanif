@@ -1,0 +1,84 @@
+<style>
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: beige;
+    }
+    h1 {
+        text-align:center;
+    }
+
+    .credentials {
+        text-align:center;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-color:#f00;
+        border-collapse:collapses;
+        background-color:rgb(247, 247, 242);
+    }
+
+    table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    th, td {
+        padding:10px;
+    }    
+
+    .btn {
+        margin:auto;
+        display:block;
+    }
+</style>
+
+<body>
+{% extends 'base.html' %}
+
+  {% block content %}
+    <h1>Assignment 4 PBP</h1>
+    <class class="credentials">
+        <h5>Nama: </h5>
+        <p>{{name}}</p>
+
+        <h5>Student ID: </h5>
+        <p>{{npm}}</p>
+
+        <h5>Username: </h5>
+        <p>{{user.get_username}}</p>
+    </class>
+    
+    <button class="btn"><a href="{% url 'todolist:new_task' %}">New Task</a></button>
+    <br>
+    <table>
+        <tr>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Finished?</th>
+        <th>Remove</th>
+        </tr>
+        
+        {% for task in list_task %}
+        <tr>
+            <td>{{task.date}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td width="116px"><p>{% if task.is_finished is True %}
+                Finished
+                {% else %}
+                Not Finished
+                {% endif %}
+            </p></td>
+            <td><button><a href="{% url 'todolist:is_finished_status' task.id %}">Change Status</a></button></td>
+            <td><button><a href="{% url 'todolist:remove' task.id %}">Remove Task</a></button></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
+    <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+
+{% endblock content %}
+</body>

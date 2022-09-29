@@ -1,0 +1,64 @@
+<style>
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: beige;
+    }
+    h1 {
+        text-align:center;
+    }
+
+    .credentials {
+        text-align:center;
+    }
+
+    table, th, td {
+        border: 1px solid;
+        border-color:#f00;
+        border-collapse:collapses;
+        background-color:rgb(247, 247, 242);
+    }
+
+    table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    th, td {
+        padding:10px;
+    }    
+</style>
+
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Add New Task</title>
+{% endblock meta %}
+
+{% block content %}  
+
+<div class = "login">
+    
+    <h1>Add New Task</h1>  
+
+        <form method="POST" >  
+            {% csrf_token %}  
+            <table>  
+                {{ form.as_table }}  
+                <tr>  
+                    <td></td>
+                    <td><input type="submit" name="submit" value="Add Task"/></td>  
+                </tr>  
+            </table>  
+        </form>
+
+    {% if messages %}  
+        <ul>   
+            {% for message in messages %}  
+                <li>{{ message }}</li>  
+                {% endfor %}  
+        </ul>   
+    {% endif %}
+
+</div>  
+
+{% endblock content %}
