@@ -174,6 +174,6 @@ Dikarenakan kita membuat aplikasi todolist pada project yang sama dengan tugas 2
 9) **Membuat dua akun pengguna dan tiga dummy data menggunakan model Task pada akun masing-masing di situs web Heroku.**<br>
 Berikut adalah 2 akun yang masing-masing memiliki 3 task<br>
 ```
-Username = dumbydummy, Password = thisisatest<br>
-Username = dumberdummy, Password = thisisatest<br>
+Username = dumbydummy, Password = thisisatest
+Username = dumberdummy, Password = thisisatest
 ```
