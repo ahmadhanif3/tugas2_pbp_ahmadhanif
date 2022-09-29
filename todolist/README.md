@@ -1,7 +1,7 @@
 Nama    : Ahmad Hanif Adisetya<br>
 NPM     : 2106750603<br>
 Kelas   : PBP C<br>
-Link    : https://katalog-hanif.herokuapp.com/todolist/,  https://katalog-hanif.herokuapp.com/login/, https://katalog-hanif.herokuapp.com/register/, https://katalog-hanif.herokuapp.com/new-task/, https://katalog-hanif.herokuapp.com/logout/
+Link    : https://katalog-hanif.herokuapp.com/todolist/,  https://katalog-hanif.herokuapp.com/todolist/login/, https://katalog-hanif.herokuapp.com/todolist/register/, https://katalog-hanif.herokuapp.com/todolist/new-task/, https://katalog-hanif.herokuapp.com/todolist/logout/
 
 ## Apa kegunaan {% csrf_token %} pada elemen <form>? Apa yang terjadi apabila tidak ada potongan kode tersebut pada elemen <form>?
 CSRF Token merupakan sebuah tag dari django yang diimplementasikan untuk menghindari/menjaga/mencegah dari serangan CSRF atau Cross Site Request Forgery. Tujuan dari serangan CSRF sendiri adalah untuk menyebabkan user melakukan aksi yang sebenarnya tidak ingin user lakukan. Dibutuhkan lah CSRF Token untuk memastikan keamanan dari hal tersebut. Kita dapat menggunakan CSRF Token dengan mudah, dengan hanya menyisipkan {% csrf_token %} ke dalam form di file html dapat menjamin sekuritas post request dari user ke server. <br>
