@@ -8,7 +8,7 @@ CSRF Token merupakan sebuah tag dari django yang diimplementasikan untuk menghin
 Jika kita tidak menggunakan {% csrf_token %}, maka keamanan form dari serangan CSRF tidak terjamin. Sehingga tidak akan diketahui secara pasti apakah request yang diberikan berasal dari user yang terautentikasi atau tidak.
 
 ## Apakah kita dapat membuat elemen <form> secara manual (tanpa menggunakan generator seperti {{ form.as_table }})? Jelaskan secara gambaran besar bagaimana cara membuat <form> secara manual.
-Kita dapat membuat elemen dari form secara manual. Tentunya kita buat pada file html. Langkah pertama untuk membuat secara manual adalah dengan mempunyai tag <form></form>, tag untuk membuat form. Di dalam tag form, kita bisa gunakan tag <table></table> juga agar lebih terstruktur tampilannya. Kemudian di dalam cell dari table tersebut, kita dapat gunakan <input> untuk menjadi field dari form kita. Setelah itu, kita perlu juga <input> untuk melakukan submit, caranya adalah kita set type dari input tersebut menjadi submit. Contoh membuat form secara manual dapat dilihat pada login.html. Potongan kodenya adalah sebagai berikut:
+Kita dapat membuat elemen dari form secara manual. Tentunya kita buat pada file html. Langkah pertama untuk membuat secara manual adalah dengan mempunyai tag ```<form></form>```, tag untuk membuat form. Di dalam tag form, kita bisa gunakan tag ```<table></table>``` juga agar lebih terstruktur tampilannya. Kemudian di dalam cell dari table tersebut, kita dapat gunakan ```<input>``` untuk menjadi field dari form kita. Setelah itu, kita perlu juga ```<input>``` untuk melakukan submit, caranya adalah kita set type dari input tersebut menjadi submit. Contoh membuat form secara manual dapat dilihat pada login.html. Potongan kodenya adalah sebagai berikut:
 ```
 <form method="POST" action="">
     {% csrf_token %}
@@ -55,15 +55,15 @@ def new_task(request):
 Dapat kita lihat bahwa kita sudah pastikan bahwa methodnya adalah POST serta form valid. Selanjutnya adalah membuat objek baru dari model kita. Dalam contoh kode di atas adalah pada bagian task_data. Kita membuat objek Task() dengan atribut yang sudah kita peroleh dari form. Setelah itu, kita simpan dengan melakukan task_data.save(). Karena sudah tersimpan, kita dapat menampilkannya ke file html utama kita. Dalam aplikasi ini fungsinya adalah show_todolist dan memanggil Task.objects. Kita dapat memanggil semua objek (.all()), atau filter yang kita inginkan saja (.filter())
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
-1) **Membuat suatu aplikasi baru bernama todolist di proyek tugas Django yang sudah digunakan sebelumnya.**
+1) **Membuat suatu aplikasi baru bernama todolist di proyek tugas Django yang sudah digunakan sebelumnya.**<br>
 Masuk terlebih dahulu ke folder tugas 2, lalu ke command prompt. Nyalakan virtual environment dengan command ```python -m venv env``` lalu dilanjutkan dengan ```env\Scripts\activate.bat``` (untuk Windows). Setelah itu, ketik command ```python manage.py startapp todolist```.
-2) **Menambahkan path todolist sehingga pengguna dapat mengakses http://localhost:8000/todolist.**
+2) **Menambahkan path todolist sehingga pengguna dapat mengakses http://localhost:8000/todolist.**<br>
 Pergi ke folder project_django dan masuk ke urls.py. pada bagian urlpatterns, tambahkan ```path("todolist/", include("todolist.urls"))``` agar aplikasi todolist dapat diakses. Tak lupa untuk menambahkan todolist pada settings.py bagian INSTALLED_APPS.
-3) **Membuat sebuah model Task yang memiliki atribut**
-Pada folder todolist, buka file models.py dan tambahkan class Task dengan parameter models.Model. Tambahkan atribut di dalam class tersebut. Sesuai petunjuk soal kita perlu menambahkan atribut user dengan models.ForeignKey(User, on_delete=models.CASCADE), atribut date dengan models.DateField(default=datetime.date.today), atribut title dengan models.CharField(max_length=255), description dengan models.TextField(), serta is_finished dengan models.BooleanField() (untuk bonus).
-4) **Mengimplementasikan form registrasi, login, dan logout agar pengguna dapat menggunakan todolist dengan baik.**
+3) **Membuat sebuah model Task yang memiliki atribut**<br>
+Pada folder todolist, buka file models.py dan tambahkan class Task dengan parameter models.Model. Tambahkan atribut di dalam class tersebut. Sesuai petunjuk soal kita perlu menambahkan atribut user dengan ```models.ForeignKey(User, on_delete=models.CASCADE)```, atribut date dengan ```models.DateField(default=datetime.date.today)```, atribut title dengan ```models.CharField(max_length=255)```, description dengan ```models.TextField()```, serta is_finished dengan ```models.BooleanField(default=False)``` (untuk bonus).
+4) **Mengimplementasikan form registrasi, login, dan logout agar pengguna dapat menggunakan todolist dengan baik.**<br>
 Pertama kita buat fungsi show_todolist terlebih dahulu. Fungsi tersebut untuk tampilan utama dari todolist kita. Kita mengambil object yang sesuai dengan user yang login, lalu return ```return render(request, "todolist.html", context)```
-Buatlah fungsi register untuk melakukan pendaftaran user (sign up). Kita memanfaatkan UserCreationForm() yang sudah disediakan oleh django. Di dalamnya kita cek apakah method merupakan POST, lalu juga apakah form yang diisi valid. Setelah benar, kita simpan isinya dan redirect ke halaman login. Berikut adalah fungsinya:
+Buatlah fungsi register untuk melakukan pendaftaran user (sign up). Kita memanfaatkan ```UserCreationForm()``` yang sudah disediakan oleh django. Di dalamnya kita cek apakah method merupakan POST, lalu juga apakah form yang diisi valid. Setelah benar, kita simpan isinya dan redirect ke halaman login. Berikut adalah fungsinya:
 ```
 def register(request):
     form = UserCreationForm()
@@ -102,9 +102,9 @@ logout(request)
     response.delete_cookie('last_login')
     return response
 ```
-5) **Membuat halaman utama todolist yang memuat username pengguna, tombol Tambah Task Baru, tombol logout, serta tabel berisi tanggal pembuatan task, judul task, dan deskripsi task.**
+5) **Membuat halaman utama todolist yang memuat username pengguna, tombol Tambah Task Baru, tombol logout, serta tabel berisi tanggal pembuatan task, judul task, dan deskripsi task.**<br>
 Buatlah folder templates dan buat file todolist.html. Pertama tambahkan nama dan npm terlebih dahulu, setelah itu kita tampilkan username dengan memanfaatkan ```{{user.get_username}}```. Selanjutnya untuk tombol menambah task, kita bisa gunakan tag button serta a. Berikut adalah potongannya ```<button class="btn"><a href="{% url 'todolist:new_task' %}">New Task</a></button>```. Selanjutnya kita buat tabel dengan memanfaatkan tag table. Di dalam table tersebut, kita bikin table header atau row teratas untuk menyatakan atribut dari models kita (seperti Title, Description, dsb.) dan dibawahnya kita manfaatkan for loop untuk mengiterasi task dari user yang sudah difilter dari fungsi show_todolist. Terdapat date, title, dan description. Lalu untuk bonus terdapat is_finished, tombol untuk mengganti status task, serta tombol untuk menghilangkan/membuang task. Setelah tabel selesai terakhir kita masukkan untuk last login dengan memanfaatkan {{last_login}} serta button untuk logout yang potongan kodenya adalah ```<button><a href="{% url 'todolist:logout' %}">Logout</a></button>```.
-6) **Membuat halaman form untuk pembuatan task. Data yang perlu dimasukkan pengguna hanyalah judul task dan deskripsi task.**
+6) **Membuat halaman form untuk pembuatan task. Data yang perlu dimasukkan pengguna hanyalah judul task dan deskripsi task.**<br>
 Sebelum membuat halaman, kita buat class TaskForm serta fungsi new_task pada views.py. Kita dapat membuat form dengan memanfaatkan forms.Form dan di dalamnya adalah untuk isi dari form. Terdapat title yang memanfaatkan forms.CharField(label="Title") dan description yang memanfaatkan forms.CharField(label="Description", widget=forms.Textarea()). Lalu untuk fungsi new_task sedikit mirip dengan fungsi yang dibuat pada langkah 4, yaitu sebagai berikut:
 ```
 @login_required(login_url='/todolist/login/')
@@ -162,13 +162,13 @@ Setelah kita buat keduanya, kita dapat lanjutkan membangun new_task.html. Dalamn
 
 {% endblock content %}
 ```
-7) **Membuat routing sehingga beberapa fungsi dapat diakses melalui URL**
+7) **Membuat routing sehingga beberapa fungsi dapat diakses melalui URL**<br>
 Buatlah file urls.py pada folder todolist dan import urls serta fungsi yang telah dibuat pada views.py. Buat variable app_name dan tambahkan nama aplikasi todolist. Buat suatu list bernama urlpatterns dan tambahkan path yang diinginkan. URL dan apa yang terdapat pada url patterns adalah sebagai berikut:
- http://localhost:8000/todolist -> ```path("", show_todolist, name="show_todolist")```
- http://localhost:8000/todolist/login -> ```path('login/', login_user, name='login')```
- http://localhost:8000/todolist/register -> ```path('register/', register, name='register')``` 
- http://localhost:8000/todolist/new-task -> ```path("new-task/", new_task, name="new_task")```
+ http://localhost:8000/todolist -> ```path("", show_todolist, name="show_todolist")```<br>
+ http://localhost:8000/todolist/login -> ```path('login/', login_user, name='login')```<br>
+ http://localhost:8000/todolist/register -> ```path('register/', register, name='register')```<br> 
+ http://localhost:8000/todolist/new-task -> ```path("new-task/", new_task, name="new_task")```<br>
  http://localhost:8000/todolist/logout -> ```path('logout/', logout_user, name='logout')```
-8) **Melakukan deployment ke Heroku terhadap aplikasi yang sudah kamu buat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.**
+8) **Melakukan deployment ke Heroku terhadap aplikasi yang sudah kamu buat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.**<br>
 Dikarenakan kita membuat aplikasi todolist pada project yang sama dengan tugas 2, kita tidak perlu melakukan deployment lagi (yeyy). Namun kita harus tetap melakukan makemigrations dan migrate. Lalu lakukan git add, commit, dan push pada repository. Setelah selesai, aplikasi dapat diakses melewati link yang ada! (pada awal README.md) 
-9) **Membuat dua akun pengguna dan tiga dummy data menggunakan model Task pada akun masing-masing di situs web Heroku.**
+9) **Membuat dua akun pengguna dan tiga dummy data menggunakan model Task pada akun masing-masing di situs web Heroku.**<br>
