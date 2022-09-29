@@ -172,3 +172,6 @@ Buatlah file urls.py pada folder todolist dan import urls serta fungsi yang tela
 8) **Melakukan deployment ke Heroku terhadap aplikasi yang sudah kamu buat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.**<br>
 Dikarenakan kita membuat aplikasi todolist pada project yang sama dengan tugas 2, kita tidak perlu melakukan deployment lagi (yeyy). Namun kita harus tetap melakukan makemigrations dan migrate. Lalu lakukan git add, commit, dan push pada repository. Setelah selesai, aplikasi dapat diakses melewati link yang ada! (pada awal README.md) 
 9) **Membuat dua akun pengguna dan tiga dummy data menggunakan model Task pada akun masing-masing di situs web Heroku.**<br>
+Berikut adalah 2 akun yang masing-masing memiliki 3 task<br>
+Username = dumbydummy, Password = thisisatest<br>
+Username = dumberdummy, Password = thisisatest<br>
