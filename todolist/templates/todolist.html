@@ -1,8 +1,9 @@
 <style>
     body {
         font-family: 'Courier New', Courier, monospace;
-        background-color: beige;
+        background-image: linear-gradient(to bottom left, beige, beige);
     }
+
     h1 {
         text-align:center;
     }
@@ -11,21 +12,9 @@
         text-align:center;
     }
 
-    table, th, td {
-        border: 1px solid;
-        border-color:#f00;
-        border-collapse:collapses;
-        background-color:rgb(247, 247, 242);
+    .card {
+        background-color: beige;
     }
-
-    table {
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    th, td {
-        padding:10px;
-    }    
 
     .btn {
         margin:auto;
@@ -35,50 +24,55 @@
 
 <body>
 {% extends 'base.html' %}
+{% load static %}
 
+{% block meta %}
+<title>Todolist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock meta %}
   {% block content %}
     <h1>Assignment 4 PBP</h1>
     <class class="credentials">
-        <h5>Nama: </h5>
-        <p>{{name}}</p>
-
-        <h5>Student ID: </h5>
-        <p>{{npm}}</p>
-
-        <h5>Username: </h5>
-        <p>{{user.get_username}}</p>
+        <h5>{{name}} {{npm}}</h5>
+        <p>{{user.get_username}}'s To Do List</p>
+        <a href="{% url 'todolist:new_task' %}" class="btn btn-info">New Task</a>
     </class>
     
-    <button class="btn"><a href="{% url 'todolist:new_task' %}">New Task</a></button>
+    <br><br>
+    {% if not list_task %}
+    <div class="d-flex justify-content-center">
+        <h3>No Task On Your To Do List</h3>
+    </div>
     <br>
-    <table>
-        <tr>
-        <th>Date</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Finished?</th>
-        <th>Remove</th>
-        </tr>
-        
+    {% else %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for task in list_task %}
-        <tr>
-            <td>{{task.date}}</td>
-            <td>{{task.title}}</td>
-            <td>{{task.description}}</td>
-            <td width="116px"><p>{% if task.is_finished is True %}
-                Finished
+        <div class="col">
+          <div class="card h-100 border-danger">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">{{task.title}} | {% if task.is_finished is True %}
+                ✓
                 {% else %}
-                Not Finished
+                ✕
                 {% endif %}
-            </p></td>
-            <td><button><a href="{% url 'todolist:is_finished_status' task.id %}">Change Status</a></button></td>
-            <td><button><a href="{% url 'todolist:remove' task.id %}">Remove Task</a></button></td>
-        </tr>
+              </h4>
+              <h6 class="card-subtitle mb-2 text-muted">{{task.date}}</h6>
+              <p class="card-text">{{task.description}}</p>
+              <div class="flex justify-between gap-3">
+               <div class="flex flex-col justify-center rounded">
+                  <a href="{% url 'todolist:is_finished_status' task.id %}" class="btn btn-success">Change Status</a> 
+                  <a href="{% url 'todolist:remove' task.id %}" class="btn btn-warning">Remove Task</a> 
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {% endfor %}
-    </table>
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    <button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+    </div>
+    {% endif %}
+
+    <p>Sesi terakhir login: {{ last_login }}</p>
+    <a href="{% url 'todolist:logout' %}" class="btn btn-info">Logout</a>
 
 {% endblock content %}
 </body>
