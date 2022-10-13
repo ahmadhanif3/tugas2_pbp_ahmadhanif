@@ -15,3 +15,4 @@ Pada tugas pemrograman kali ini, terdapat penerapan event-driven programming. Sa
 AJAX sendiri merupakan singkatan dari **Asynchronous JavaScript and XML**, maka tentu AJAX async. Penerapan asynchronous pada AJAX ialah browser tidak perlu melakukan reload seluruh halaman jika terjadi sedikit perubahan data pada halaman. AJAX hanya akan mengembalikan informasi yang di-update ke dan dari server.
 
 ## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas
+Pertama kita tambahkan fungsi untuk mengembalikan JSON dan add task di views.py. Lalu lakukan routing terhadap fungsi yang telah dibuat. Setelah itu kita ke HTML.
