@@ -30,13 +30,42 @@
 <title>Todolist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock meta %}
+
   {% block content %}
-    <h1>Assignment 4 PBP</h1>
-    <class class="credentials">
-        <h5>{{name}} {{npm}}</h5>
-        <p>{{user.get_username}}'s To Do List</p>
-        <a href="{% url 'todolist:new_task' %}" class="btn btn-info">New Task</a>
-    </class>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Title:</label>
+              <input type="text" class="form-control" id="title">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Description:</label>
+              <textarea class="form-control" id="description"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="btn" data-bs-dismiss="modal" value="submit">Buat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h1>Assignment 4 PBP</h1>
+  <class class="credentials">
+      <h5>{{name}} {{npm}}</h5>
+      <p>{{user.get_username}}'s To Do List</p>
+      <a href="{% url 'todolist:new_task' %}" class="btn btn-info">New Task</a>
+  </class>
     
     <br><br>
     {% if not list_task %}
@@ -45,30 +74,10 @@
     </div>
     <br>
     {% else %}
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        {% for task in list_task %}
-        <div class="col">
-          <div class="card h-100 border-danger">
-            <div class="card-body d-flex flex-column">
-              <h4 class="card-title">{{task.title}} | {% if task.is_finished is True %}
-                ✓
-                {% else %}
-                ✕
-                {% endif %}
-              </h4>
-              <h6 class="card-subtitle mb-2 text-muted">{{task.date}}</h6>
-              <p class="card-text">{{task.description}}</p>
-              <div class="flex justify-between gap-3">
-               <div class="flex flex-col justify-center rounded">
-                  <a href="{% url 'todolist:is_finished_status' task.id %}" class="btn btn-success">Change Status</a> 
-                  <a href="{% url 'todolist:remove' task.id %}" class="btn btn-warning">Remove Task</a> 
-               </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-    </div>
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-3 g-4" id="myCards">
+      </div>
+    </div> 
     {% endif %}
 
     <p>Sesi terakhir login: {{ last_login }}</p>
@@ -76,3 +85,57 @@
 
 {% endblock content %}
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $.get("/todolist/json", function(data){
+      for (task=0; task<data.length; task++){
+        $("#myCards").append(`
+        <div class="col" id="card">
+          <div class="card h-100 border-danger">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">${data[task].fields.title} | ${data[task].fields.is_finished ? "✓" : "✕"}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">${data[task].fields.date}</h6>
+              <p class="card-text">${data[task].fields.description}</p>
+              <div class="flex justify-between gap-3">
+               <div class="flex flex-col justify-center rounded">
+                  <button class="btn btn-success"><a href="/todolist/status/${data[task].pk}">Change Status</a></button> 
+                  <button class="btn btn-warning"><a onclick=deleteTask(${data[task].pk})>Remove Task</a></button> 
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `)
+      }
+    });
+
+    $("#btn").click(function(){
+        const title = $("#title").val()
+        const description = $("#description").val()
+        const data = {title:title,description:description,csrfmiddlewaretoken:'{{ csrf_token }}'}
+        $.ajax({url:"/todolist/add_ajax/",data:data,method:"POST"}).done(function (resp) {
+          $(".container").append(`
+          <div class="col" id="card">
+          <div class="card h-100 border-danger">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">${resp.fields.title} | ${resp.fields.is_finished ? "✓" : "✕"}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">${resp.fields.date}</h6>
+              <p class="card-text">${resp.fields.description}</p>
+              <div class="flex justify-between gap-3">
+               <div class="flex flex-col justify-center rounded">
+                  <button class="btn btn-success"><a href="/todolist/status/${resp.pk}">Change Status</a></button> 
+                  <button class="btn btn-warning"><a onclick=deleteTask(${resp.pk})>Remove Task</a></button> 
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          `)
+          }
+        )
+      })
+    });
+</script>
+

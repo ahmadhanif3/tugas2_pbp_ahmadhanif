@@ -1,0 +1,80 @@
+<style>
+    body {
+        font-family: 'Courier New', Courier, monospace;
+        background-image: linear-gradient(to bottom left, beige, beige);
+    }
+
+    h1 {
+        text-align:center;
+    }
+
+    .credentials {
+        text-align:center;
+    }
+
+    .card {
+        background-color: beige;
+    }
+
+    .btn {
+        margin:auto;
+        display:block;
+    }
+</style>
+
+<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Todolist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% endblock meta %}
+
+  {% block content %}
+
+    <h1>Assignment 4 PBP</h1>
+    <class class="credentials">
+        <h5>{{name}} {{npm}}</h5>
+        <p>{{user.get_username}}'s To Do List</p>
+        <a href="{% url 'todolist:new_task' %}" class="btn btn-info">New Task</a>
+    </class>
+    
+    <br><br>
+    {% if not list_task %}
+    <div class="d-flex justify-content-center">
+        <h3>No Task On Your To Do List</h3>
+    </div>
+    <br>
+    {% else %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for task in list_task %}
+        <div class="col" id="card">
+          <div class="card h-100 border-danger">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">{{task.title}} | {% if task.is_finished is True %}
+                ✓
+                {% else %}
+                ✕
+                {% endif %}
+              </h4>
+              <h6 class="card-subtitle mb-2 text-muted">{{task.date}}</h6>
+              <p class="card-text">{{task.description}}</p>
+              <div class="flex justify-between gap-3">
+               <div class="flex flex-col justify-center rounded">
+                  <a href="{% url 'todolist:is_finished_status' task.id %}" class="btn btn-success">Change Status</a> 
+                  <a href="{% url 'todolist:remove' task.id %}" class="btn btn-warning">Remove Task</a> 
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <p>Sesi terakhir login: {{ last_login }}</p>
+    <a href="{% url 'todolist:logout' %}" class="btn btn-info">Logout</a>
+
+{% endblock content %}
+</body>

@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from todolist.models import Task
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
+from datetime import date
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.core import serializers
 
 # Create your views here.
 @login_required(login_url='/todolist/login/')
@@ -22,6 +24,47 @@ def show_todolist(request):
         "last_login" : request.COOKIES["last_login"]
     }
     return render(request, "todolist.html", context)
+
+@login_required(login_url='/todolist/login/')
+def show_todolist_json(request):
+    data = Task.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@login_required(login_url='/todolist/login/')
+def add_ajax(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        data = Task.objects.create(title=title, description=description,)
+        task = {
+            "fields": {
+                "title":data.title,
+                "date":data.date,
+                "description":data.description,
+                "is_finished":data.is_finished
+            },
+            "pk":data.pk
+        }
+        return JsonResponse(task)
+
+def delete_ajax(request, idR):
+    if request.method == "DELETE":
+        task = Task.objects.filter(id=idR, user=request.user).first()
+        if task:
+            task.delete()
+            return HttpResponse("OK")
+        else:
+            return HttpResponse("Not Found", status_code=404)
+
+    return HttpResponse("Invalid method", status_code=405)
+
+def finish_ajax(request, id):
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
+        task = Task.objects.get(pk=id)
+        task.is_finished = True
+        task.save()
+        return HttpResponse("Success updating task")
+    return JsonResponse({"error": "Not an ajax request"}, status=400)
 
 def register(request):
     form = UserCreationForm()
@@ -86,6 +129,7 @@ def is_finished_status(request, id_task):
     task.save()
     return redirect('todolist:show_todolist')
 
+@login_required(login_url='/todolist/login/')
 def remove(request, id_task):
     Task.objects.get(pk=id_task).delete()
     return redirect('todolist:show_todolist')

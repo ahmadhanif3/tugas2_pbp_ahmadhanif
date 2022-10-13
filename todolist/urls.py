@@ -11,4 +11,8 @@ urlpatterns = [
     path("new-task/", new_task, name="new_task"),
     path("is_finished_status/<int:id_task>", is_finished_status, name="is_finished_status"),
     path("remove/<int:id_task>", remove, name="remove"),
+    path("json/", show_todolist_json, name="show_todolist_json"),
+    path("add_ajax/", add_ajax, name="add_ajax"),
+    path("delete/json/<int:id>", delete_ajax, name="delete_ajax"),
+    path("finish_ajax/<int:id>", finish_ajax, name="finish_ajax")
 ]
