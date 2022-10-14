@@ -32,25 +32,36 @@ def show_todolist_json(request):
 
 @login_required(login_url='/todolist/login/')
 def add_ajax(request):
-    if request.method == 'POST':
-        title = request.POST.get('title')
-        deskripsi = request.POST.get('description')
-        todo = Task.objects.create(title=title,description=deskripsi,user=request.user)
-        hasil = {
-            'fields':{
-                'title':todo.title,
-                'date':todo.date,
-                'description':todo.description,
-                'status':todo.is_finished,
+    if request.method == "POST":
+        title = request.POST.get("title")
+        deskripsi = request.POST.get("description")
+        task = Task.objects.create(title=title,description=deskripsi,user=request.user)
+        data = {
+            "fields":{
+                "title":task.title,
+                "date":task.date,
+                "description":task.description,
+                "status":task.is_finished,
             },
-            'pk':todo.pk
+            "pk":task.pk
         }
-        return JsonResponse(hasil)
+        return JsonResponse(data)
 
-def delete_ajax(request, idR):
+def delete_ajax(request, id):
     if request.method == "DELETE":
-        task = Task.objects.filter(id=idR, user=request.user).first()
+        task = Task.objects.get(pk=id)
         task.delete()
+        data = {
+            "fields":{
+                "title":task.title,
+                "date":task.date,
+                "description":task.description,
+                "status":task.is_finished,
+            },
+            "pk":task.pk
+        }
+        return JsonResponse(data)
+
 
 def register(request):
     form = UserCreationForm()

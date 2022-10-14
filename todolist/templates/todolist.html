@@ -18,40 +18,23 @@
     }
 
   .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
   left: 0;
   top: 0;
-  width: 50px; /* Full width */
-  height: 50px; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 50px; 
+  height: 50px; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content/Box */
 .modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  background-image: linear-gradient(to bottom left, beige, beige);
+  margin: 15% auto; 
   padding: 20px;
   border: 1px solid #888;
-  width: 50px; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+  width: 50px; 
 }
 </style>
 
@@ -63,7 +46,7 @@
 <title>Todolist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock meta %}
-  {% block content %}
+{% block content %}
 
 <div id="myModal" class="modal">
   <dialog class="modal-content">
@@ -133,7 +116,7 @@
               <div class="flex justify-between gap-3">
               <div class="flex flex-col justify-center rounded">
                     <button class="btn btn-success" ><a href="/todolist/is_finished_status/${resp.pk}">Change Status</a></button> 
-                  <button class="btn btn-warning"><a onclick=delete(${resp.pk})>Remove Task</a></button> 
+                  <button class="btn btn-warning"><a onclick=deleteDone(${resp.pk})>Remove Task</a></button> 
               </div>
               </div>
             </div>
@@ -169,19 +152,22 @@
     });
   });
 
+  </script>
+{% endblock content %}
+</body>
+
+<!--
+  Percobaan delete
   var deleteDone = function(pk) {
     $.ajax({
       type: "DELETE",
       headers: { "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value },
-      url: "{% url 'todolist:delete_ajax' 1 %}".replace(1, pk),
+      url: "{% url 'todolist:delete_ajax' " + pk +" %}",
       encode: true,
     }).done(function(data){
       document.getElementById(`card${pk}`).remove();
     }) 
   }
-  </script>
-{% endblock content %}
-</body>
-
-
+  
+-->
 

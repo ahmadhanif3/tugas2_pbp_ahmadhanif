@@ -13,5 +13,5 @@ urlpatterns = [
     path("remove/<int:id_task>", remove, name="remove"),
     path("json/", show_todolist_json, name="show_todolist_json"),
     path("add_ajax/", add_ajax, name="add_ajax"),
-    path("delete/json/<int:id>", delete_ajax, name="delete_ajax"),
+    path("delete_ajax/<int:id>", delete_ajax, name="delete_ajax"),
 ]
