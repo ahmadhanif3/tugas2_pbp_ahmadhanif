@@ -32,39 +32,25 @@ def show_todolist_json(request):
 
 @login_required(login_url='/todolist/login/')
 def add_ajax(request):
-    if request.method == "POST":
-        title = request.POST.get("title")
-        description = request.POST.get("description")
-        data = Task.objects.create(title=title, description=description,)
-        task = {
-            "fields": {
-                "title":data.title,
-                "date":data.date,
-                "description":data.description,
-                "is_finished":data.is_finished
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        deskripsi = request.POST.get('description')
+        todo = Task.objects.create(title=title,description=deskripsi,user=request.user)
+        hasil = {
+            'fields':{
+                'title':todo.title,
+                'date':todo.date,
+                'description':todo.description,
+                'status':todo.is_finished,
             },
-            "pk":data.pk
+            'pk':todo.pk
         }
-        return JsonResponse(task)
+        return JsonResponse(hasil)
 
 def delete_ajax(request, idR):
     if request.method == "DELETE":
         task = Task.objects.filter(id=idR, user=request.user).first()
-        if task:
-            task.delete()
-            return HttpResponse("OK")
-        else:
-            return HttpResponse("Not Found", status_code=404)
-
-    return HttpResponse("Invalid method", status_code=405)
-
-def finish_ajax(request, id):
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
-        task = Task.objects.get(pk=id)
-        task.is_finished = True
-        task.save()
-        return HttpResponse("Success updating task")
-    return JsonResponse({"error": "Not an ajax request"}, status=400)
+        task.delete()
 
 def register(request):
     form = UserCreationForm()

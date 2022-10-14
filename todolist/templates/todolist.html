@@ -12,14 +12,47 @@
         text-align:center;
     }
 
-    .card {
-        background-color: beige;
-    }
-
     .btn {
         margin:auto;
         display:block;
     }
+
+  .modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 50px; /* Full width */
+  height: 50px; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50px; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 </style>
 
 <body>
@@ -30,43 +63,26 @@
 <title>Todolist</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {% endblock meta %}
-
   {% block content %}
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">New Task</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form method="POST">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label for="recipient-name" class="col-form-label">Title:</label>
-              <input type="text" class="form-control" id="title">
-            </div>
-            <div class="mb-3">
-              <label for="message-text" class="col-form-label">Description:</label>
-              <textarea class="form-control" id="description"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" id="btn" data-bs-dismiss="modal" value="submit">Buat</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+<div id="myModal" class="modal">
+  <dialog class="modal-content">
+    <p>Add new task</p>
+    <label for="recipient-name" class="col-form-label">Title:</label>
+    <input type="text" class="form-control" id="title">
+    <label for="message-text" class="col-form-label">Description:</label>
+    <textarea class="form-control" id="description"></textarea>
+    <button type="button" class="btn btn-success" id="done">Submit</button>
+  </dialog>
+</div>
 
   <h1>Assignment 4 PBP</h1>
   <class class="credentials">
       <h5>{{name}} {{npm}}</h5>
       <p>{{user.get_username}}'s To Do List</p>
-      <a href="{% url 'todolist:new_task' %}" class="btn btn-info">New Task</a>
+      <button type="button" class="btn btn-info" id="myBtn">New Task</button> 
   </class>
-    
+
     <br><br>
     {% if not list_task %}
     <div class="d-flex justify-content-center">
@@ -83,25 +99,66 @@
     <p>Sesi terakhir login: {{ last_login }}</p>
     <a href="{% url 'todolist:logout' %}" class="btn btn-info">Logout</a>
 
-{% endblock content %}
-</body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/jquery/jquery-3.1.0.js"></script>
+  <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script>
+  var modal = document.getElementById("myModal");
+  var btn = document.getElementById("myBtn");
+  var sbmt = document.getElementById("done");
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-  $(document).ready(function(){
-    $.get("/todolist/json", function(data){
-      for (task=0; task<data.length; task++){
-        $("#myCards").append(`
-        <div class="col" id="card">
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  sbmt.onclick = function() {
+    modal.style.display = "none";
+    const title = $("#title").val()
+    const desc = $("#description").val()
+    const data = {title:title, description:desc, csrfmiddlewaretoken:"{{ csrf_token }}"}
+    $.ajax({url:"/todolist/add_ajax/", data:data, method:"POST"}).done(function(resp){
+      $("#myCards").append(`
+        <div class="col" id="card${resp.pk}">
           <div class="card h-100 border-danger">
             <div class="card-body d-flex flex-column">
-              <h4 class="card-title">${data[task].fields.title} | ${data[task].fields.is_finished ? "✓" : "✕"}</h4>
-              <h6 class="card-subtitle mb-2 text-muted">${data[task].fields.date}</h6>
-              <p class="card-text">${data[task].fields.description}</p>
+              <h4 class="card-title">${resp.fields.title} ${resp.fields.is_finished ? "✓" : "✕"}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">${resp.fields.date}</h6>
+              <p class="card-text">${resp.fields.description}</p>
+              <div class="flex justify-between gap-3">
+              <div class="flex flex-col justify-center rounded">
+                    <button class="btn btn-success" ><a href="/todolist/is_finished_status/${resp.pk}">Change Status</a></button> 
+                  <button class="btn btn-warning"><a onclick=delete(${resp.pk})>Remove Task</a></button> 
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `)
+    })
+    document.getElementById("title").value = ""
+    document.getElementById("description").value = ""
+  }
+
+  $(document).ready(function(){
+    $.get("/todolist/json", function(task){
+      for (index=0; index<task.length; index++){
+        $("#myCards").append(`
+        <div class="col" id="card${task[index].pk}">
+          <div class="card h-100 border-danger">
+            <div class="card-body d-flex flex-column">
+              <h4 class="card-title">${task[index].fields.title} ${task[index].fields.is_finished ? "✓" : "✕"}</h4>
+              <h6 class="card-subtitle mb-2 text-muted">${task[index].fields.date}</h6>
+              <p class="card-text">${task[index].fields.description}</p>
               <div class="flex justify-between gap-3">
                <div class="flex flex-col justify-center rounded">
-                  <button class="btn btn-success"><a href="/todolist/status/${data[task].pk}">Change Status</a></button> 
-                  <button class="btn btn-warning"><a onclick=deleteTask(${data[task].pk})>Remove Task</a></button> 
+                  <button class="btn btn-success" ><a href="/todolist/is_finished_status/${task[index].pk}">Change Status</a></button> 
+                  <button class="btn btn-warning"><a onclick=deleteDone(${task[index].pk})>Remove Task</a></button> 
                </div>
               </div>
             </div>
@@ -110,32 +167,21 @@
         `)
       }
     });
+  });
 
-    $("#btn").click(function(){
-        const title = $("#title").val()
-        const description = $("#description").val()
-        const data = {title:title,description:description,csrfmiddlewaretoken:'{{ csrf_token }}'}
-        $.ajax({url:"/todolist/add_ajax/",data:data,method:"POST"}).done(function (resp) {
-          $(".container").append(`
-          <div class="col" id="card">
-          <div class="card h-100 border-danger">
-            <div class="card-body d-flex flex-column">
-              <h4 class="card-title">${resp.fields.title} | ${resp.fields.is_finished ? "✓" : "✕"}</h4>
-              <h6 class="card-subtitle mb-2 text-muted">${resp.fields.date}</h6>
-              <p class="card-text">${resp.fields.description}</p>
-              <div class="flex justify-between gap-3">
-               <div class="flex flex-col justify-center rounded">
-                  <button class="btn btn-success"><a href="/todolist/status/${resp.pk}">Change Status</a></button> 
-                  <button class="btn btn-warning"><a onclick=deleteTask(${resp.pk})>Remove Task</a></button> 
-               </div>
-              </div>
-            </div>
-          </div>
-        </div>
-          `)
-          }
-        )
-      })
-    });
-</script>
+  var deleteDone = function(pk) {
+    $.ajax({
+      type: "DELETE",
+      headers: { "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value },
+      url: "{% url 'todolist:delete_ajax' 1 %}".replace(1, pk),
+      encode: true,
+    }).done(function(data){
+      document.getElementById(`card${pk}`).remove();
+    }) 
+  }
+  </script>
+{% endblock content %}
+</body>
+
+
 
